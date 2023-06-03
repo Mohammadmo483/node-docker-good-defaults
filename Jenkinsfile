@@ -22,7 +22,7 @@ pipeline {
       steps {
         sh 'docker run --name app2-mohammad -d -p 3000:3000 app2-mohammad:$BUILD_ID'
         sh 'sleep 5'
-        sh 'curl -v http://localhost:3000/app2-mohammad'
+        sh 'curl -v http://localhost:3000'
       }
     }
 
