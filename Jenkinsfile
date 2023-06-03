@@ -14,7 +14,7 @@ pipeline {
 
     stage('build Docker Images') {
       steps {
-        sh 'docker build -t app2-mohammad:${env.BUILD_NUMBER} .'
+        sh 'docker build -t app2-mohammad:$BUILD_ID .'
       }
     }
 
