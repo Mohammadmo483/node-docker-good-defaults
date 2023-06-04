@@ -30,7 +30,7 @@ pipeline {
     stage('Upload to DockerHub') {
       steps {
         withCredentials(bindings: [usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'pass', usernameVariable: 'user')
-                                ]) {
+                                        ]) {
           sh "docker tag app2-mohammad:$BUILD_ID m7madm7mad/app2-mohammad:$BUILD_ID"
           sh "docker login -u $user -p $pass"
           sh "docker push m7madm7mad/app2-mohammad:$BUILD_ID"
