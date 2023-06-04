@@ -20,7 +20,6 @@ pipeline {
 
     stage('Run & Test the Containers') {
       steps {
-        sh 'docker stop app2-mohammad && docker rm app2-mohammad'
         sh 'docker run --name app2-mohammad -d -p 3000:8080 app2-mohammad:$BUILD_ID'
         sh 'sleep 5'
         sh 'curl -v http://localhost:8080/app2-mohammad'
@@ -28,5 +27,17 @@ pipeline {
       }
     }
 
+     stage('Upload to DockerHub') {
+            
+            steps {
+         withCredentials(bindings: [usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'pass', usernameVariable: 'user')
+                ]) {           
+                sh "docker tag app1-mohammad:${env.BUILD_NUMBER} m7madm7mad/app1-mohammad:${env.BUILD_NUMBER}"
+                sh "docker login -u $user -p $pass"
+                sh "docker push m7madm7mad/app1-mohammad:${env.BUILD_NUMBER}"
+                   }
+            }
+        }
+    
   }
 }
