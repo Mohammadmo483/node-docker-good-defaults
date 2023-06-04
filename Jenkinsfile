@@ -20,7 +20,6 @@ pipeline {
 
     stage('Run & Test the Containers') {
       steps {
-        
         sh 'docker run --name app2-mohammad -d -p 3000:8080 app2-mohammad:$BUILD_ID'
         sh 'sleep 5'
         sh 'curl -v http://localhost:8080/app2-mohammad'
