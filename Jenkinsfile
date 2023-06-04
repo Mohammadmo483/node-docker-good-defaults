@@ -12,5 +12,21 @@ pipeline {
       }
     }
 
+    stage('build Docker Images') {
+      steps {
+        sh 'docker build -t app2-mohammad:$BUILD_ID .'
+      }
+    }
+
+    stage('Run & Test the Containers') {
+      steps {
+        
+        sh 'docker run --name app2-mohammad -d -p 3000:8080 app2-mohammad:$BUILD_ID'
+        sh 'sleep 5'
+        sh 'curl -v http://localhost:8080/app2-mohammad'
+        sh 'docker stop app2-mohammad && docker rm app2-mohammad'
+      }
+    }
+
   }
 }
