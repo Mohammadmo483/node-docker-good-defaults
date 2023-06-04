@@ -27,17 +27,17 @@ pipeline {
       }
     }
 
-     stage('Upload to DockerHub') {
-            
-            steps {
-         withCredentials(bindings: [usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'pass', usernameVariable: 'user')
-                ]) {           
-                sh "docker tag app1-mohammad:${env.BUILD_NUMBER} m7madm7mad/app1-mohammad:${env.BUILD_NUMBER}"
-                sh "docker login -u $user -p $pass"
-                sh "docker push m7madm7mad/app1-mohammad:${env.BUILD_NUMBER}"
-                   }
-            }
+    stage('Upload to DockerHub') {
+      steps {
+        withCredentials(bindings: [usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'pass', usernameVariable: 'user')
+                        ]) {
+          sh "docker tag app1-mohammad:${env.BUILD_NUMBER} m7madm7mad/app1-mohammad:${env.BUILD_NUMBER}"
+          sh "docker login -u $user -p $pass"
+          sh "docker push m7madm7mad/app1-mohammad:${env.BUILD_NUMBER}"
         }
-    
+
+      }
+    }
+
   }
 }
