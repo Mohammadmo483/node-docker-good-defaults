@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    node {
+      label 'docker'
+    }
+
+  }
   stages {
     stage('Checkout Code') {
       steps {
@@ -9,37 +14,15 @@ pipeline {
 
     stage('Build Docker Images') {
       steps {
-        script {
-          def dockerImage = docker.build('your-image-name:tag', '-f path/to/Dockerfile .')
-        }
-
+        sh 'docker build -t app2-mohammad:$BUILD_ID .'
       }
     }
 
     stage('Run & Test the Containers') {
       steps {
-        script {
-          docker.withServer('tcp://docker-host:2376') {
-            def composeCommand = "docker-compose -f path/to/docker-compose.yml up -d"
-            sh composeCommand
-
-            // Run your tests against the containers
-            // ...
-          }
-        }
-
-      }
-    }
-
-    stage('Upload to DockerHub') {
-      steps {
-        script {
-          def dockerImage = docker.build('your-image-name:tag', '-f path/to/Dockerfile .')
-          docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials-id') {
-            dockerImage.push()
-          }
-        }
-
+        sh 'docker run -d --name app2-mohammad -p 3000:8080 app2-mohammad:$BUILD_ID'
+        sh 'sleep 5'
+        sh 'docker stop app2-mohammad && docker rm app2-mohammad'
       }
     }
 
