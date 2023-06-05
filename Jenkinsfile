@@ -21,7 +21,7 @@ pipeline {
     stage('Run & Test the Containers') {
       steps {
         sh 'docker stop app3-mohammad && docker rm app3-mohammad'
-        sh 'docker run -d --name app3-mohammad -p 80:8080 app3-mohammad:$BUILD_ID'
+        sh 'docker run -d --name app3-mohammad -p 80:80 app3-mohammad:$BUILD_ID'
         sh 'sleep 5'
       }
     }
