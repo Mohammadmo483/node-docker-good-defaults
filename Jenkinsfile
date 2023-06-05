@@ -22,7 +22,6 @@ pipeline {
       steps {
         sh 'docker run -d --name app2-mohammad -p 3000:8080 app2-mohammad:$BUILD_ID'
         sh 'sleep 5'
-        sh 'docker stop app2-mohammad && docker rm app2-mohammad'
       }
     }
 
