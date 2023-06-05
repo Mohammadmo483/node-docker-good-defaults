@@ -20,10 +20,9 @@ pipeline {
 
     stage('Run & Test the Containers') {
       steps {
-        sh 'docker stop app2-mohammad && docker rm app2-mohammad'
         sh 'docker run --name app2-mohammad -d -p 80:80 app2-mohammad:$BUILD_ID'
         sh 'sleep 5'
-        sh 'curl localhost:8080'
+        sh 'curl localhost:80'
         sh 'docker stop app2-mohammad && docker rm app2-mohammad'
       }
     }
