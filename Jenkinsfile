@@ -14,13 +14,13 @@ pipeline {
 
     stage('Build Docker Images') {
       steps {
-        sh 'docker build -t app2-mohammad:$BUILD_ID .'
+        sh 'docker build -t app3-mohammad:$BUILD_ID .'
       }
     }
 
     stage('Run & Test the Containers') {
       steps {
-        sh 'docker run -d --name app2-mohammad -p 3000:8080 app2-mohammad:$BUILD_ID'
+        sh 'docker run -d --name app3-mohammad -p 80:8080 app3-mohammad:$BUILD_ID'
         sh 'sleep 5'
       }
     }
