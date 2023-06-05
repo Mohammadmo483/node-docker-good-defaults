@@ -1,43 +1,49 @@
 pipeline {
-  agent {
-    node {
-      label 'docker'
-    }
+    agent any
 
-  }
-  stages {
-    stage('Checkout Code') {
-      steps {
-        git(url: 'https://github.com/Mohammadmo483/node-docker-good-defaults.git', branch: 'main', changelog: true, poll: true)
-      }
-    }
-
-    stage('build Docker Images') {
-      steps {
-        sh 'docker build -t app2-mohammad:$BUILD_ID .'
-      }
-    }
-
-    stage('Run & Test the Containers') {
-      steps {
-        sh 'docker run --name app2-mohammad -d -p 80:80 app2-mohammad:$BUILD_ID'
-        sh 'sleep 5'
-        sh 'curl localhost:80'
-        sh 'docker stop app2-mohammad && docker rm app2-mohammad'
-      }
-    }
-
-    stage('Upload to DockerHub') {
-      steps {
-        withCredentials(bindings: [usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'pass', usernameVariable: 'user')
-                                                                ]) {
-          sh "docker tag app2-mohammad:$BUILD_ID m7madm7mad/app2-mohammad:$BUILD_ID"
-          sh "docker login -u $user -p $pass"
-          sh "docker push m7madm7mad/app2-mohammad:$BUILD_ID"
+    stages {
+        stage('Checkout Code') {
+            steps {
+                // Clone the repository
+                git 'https://github.com/lidorg-dev/node-docker-good-defaults.git'
+            }
         }
 
-      }
-    }
+        stage('Build Docker Images') {
+            steps {
+                // Build the Docker images
+                script {
+                    def dockerImage = docker.build('your-image-name:tag', '-f path/to/Dockerfile .')
+                }
+            }
+        }
 
-  }
+        stage('Run & Test the Containers') {
+            steps {
+                // Run and test the containers
+                script {
+                    // Use Docker Compose to run the containers
+                    docker.withServer('tcp://docker-host:2376') {
+                        def composeCommand = "docker-compose -f path/to/docker-compose.yml up -d"
+                        sh composeCommand
+
+                        // Run your tests against the containers
+                        // ...
+                    }
+                }
+            }
+        }
+
+        stage('Upload to DockerHub') {
+            steps {
+                // Push the built Docker images to DockerHub
+                script {
+                    def dockerImage = docker.build('your-image-name:tag', '-f path/to/Dockerfile .')
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials-id') {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+    }
 }
