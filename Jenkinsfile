@@ -20,8 +20,7 @@ pipeline {
 
     stage('Run & Test the Containers') {
       steps {
-        sh '''docker run  --name app6-mohammad -dp 80:8080  app6-mohammad:$BUILD_ID
-'''
+        sh 'docker run -dp 3000:3000 getting-started'
       }
     }
 
