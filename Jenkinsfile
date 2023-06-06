@@ -20,8 +20,7 @@ pipeline {
 
     stage('Run & Test the Containers') {
       steps {
-        sh 'docker run -d --name app3-mohammad -p 3000:3000 -e $BUILD_ID app3-mohammad:$BUILD_ID'
-        sh 'docker stop app3-mohammad && docker rm app3-mohammad'
+        sh 'docker run -d --name app5-mohammad  app6-mohammad:$BUILD_ID'
       }
     }
 
