@@ -20,7 +20,7 @@ pipeline {
 
     stage('Run & Test the Containers') {
       steps {
-        sh 'docker run -dp 3000:3000 getting-started'
+        sh 'sudo docker container run -d app6-mohammad'
       }
     }
 
