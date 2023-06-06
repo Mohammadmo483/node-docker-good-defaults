@@ -20,7 +20,8 @@ pipeline {
 
     stage('Run & Test the Containers') {
       steps {
-        sh 'sudo docker container run -d app6-mohammad'
+        sh '''sudo docker container runrun -d --name app6-mohammad -p 3000:3000 app6-mohammad:$BUILD_ID
+'''
       }
     }
 
