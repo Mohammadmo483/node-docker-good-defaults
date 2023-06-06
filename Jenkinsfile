@@ -14,7 +14,7 @@ pipeline {
 
     stage('Build Docker Images') {
       steps {
-        sh 'docker build -t app3-mohammad:$BUILD_ID .'
+        sh 'docker build -t app6-mohammad:$BUILD_ID .'
       }
     }
 
