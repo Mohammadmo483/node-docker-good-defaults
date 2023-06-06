@@ -20,7 +20,7 @@ pipeline {
 
     stage('Run & Test the Containers') {
       steps {
-        sh 'docker run -d --name app5-mohammad  app6-mohammad:$BUILD_ID'
+        sh 'docker run -d --name app6-mohammad  app6-mohammad:$BUILD_ID'
       }
     }
 
